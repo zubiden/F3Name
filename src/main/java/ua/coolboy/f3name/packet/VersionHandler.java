@@ -11,7 +11,7 @@ public class VersionHandler {
         version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
         switch (version) {
             case "v1_13_R1":
-                packet =  new PayloadPacket1_13();
+                packet =  new PayloadPacket1_13(version);
                 break;
             default:
                 throw new IllegalStateException("[F3Name] Unsupported version: "+version+"!");

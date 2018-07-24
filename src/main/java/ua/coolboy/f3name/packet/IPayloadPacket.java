@@ -8,5 +8,7 @@ public interface IPayloadPacket {
     public void sendRaw(Player player, String string);
     
     public Object getHandle();
+    
+    public String getVersion();
 
 }

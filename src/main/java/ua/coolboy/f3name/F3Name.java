@@ -18,6 +18,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import ua.coolboy.f3name.hooks.LuckPermsHook;
+import ua.coolboy.f3name.hooks.PAPIHook;
 import ua.coolboy.f3name.hooks.VaultHook;
 import ua.coolboy.f3name.packet.IPayloadPacket;
 
@@ -37,6 +38,7 @@ public class F3Name extends JavaPlugin implements Listener {
 
     private LuckPermsHook lpHook;
     private VaultHook vaultHook;
+    private PAPIHook papiHook;
 
     private static final List<String> hooks = new ArrayList<>();
 
@@ -59,6 +61,7 @@ public class F3Name extends JavaPlugin implements Listener {
 
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             hooks.add("PAPI");
+            papiHook = new PAPIHook(Bukkit.getPluginManager().getPlugin("PlaceholderAPI"));
             info("Found PlaceholderAPI! Using it for placeholders.");
         }
 
@@ -119,13 +122,6 @@ public class F3Name extends JavaPlugin implements Listener {
 
     public HashMap<String, F3NameRunnable> getRunnables() {
         return runnables;
-    }
-
-    public static String getPAPIString(Player player, String string) {
-        if (isHooked("PAPI")) {
-            return me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, string);
-        }
-        return string;
     }
 
     public String getPlayerGroup(Player player) {
