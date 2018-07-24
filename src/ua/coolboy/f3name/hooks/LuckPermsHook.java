@@ -23,10 +23,13 @@ public class LuckPermsHook {
         this.groups = groups.stream().map(GroupDS::getGroupName).collect(Collectors.toList());
     }
 
+    /*
+        Better than Vault, we can get best group from already existed in config with sort by weight
+     */
     public String getBestPlayerGroup(UUID uuid) {
         User user = api.getUser(uuid);
         if (user == null) {
-            return "everyone";
+            return GroupDS.DEFAULT_GROUP;
         }
         Optional<String> group = user.getAllNodes().stream()
                 .filter(Node::isGroupNode)
@@ -36,7 +39,7 @@ public class LuckPermsHook {
                 .filter(n -> groups.contains(n));
 
         if (!group.isPresent()) {
-            return "everyone";
+            return GroupDS.DEFAULT_GROUP;
         }
         return group.get();
     }

@@ -1,7 +1,7 @@
 name: F3Name
 main: ua.coolboy.f3name.F3Name
-version: 1.1
-author: [Cool_boy]
+version: 1.2
+author: Cool_boy
 api-version: 1.13
 softdepend: [PlaceholderAPI, LuckPerms]
 commands:

@@ -10,6 +10,8 @@ public class GroupDS {
     private boolean shuffle;
     private int updateTime;
     
+    public static final String DEFAULT_GROUP = "everyone";
+    
     //GroupDebugScreen
     public GroupDS(ConfigurationSection section) {
         group = section.getName();
