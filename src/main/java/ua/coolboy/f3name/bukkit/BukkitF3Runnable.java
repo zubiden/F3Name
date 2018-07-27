@@ -1,4 +1,4 @@
-package ua.coolboy.f3name;
+package ua.coolboy.f3name.bukkit;
 
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
@@ -7,22 +7,22 @@ import java.util.Random;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import ua.coolboy.f3name.packet.IPayloadPacket;
-import ua.coolboy.f3name.packet.VersionHandler;
+import ua.coolboy.f3name.core.F3Group;
+import ua.coolboy.f3name.core.F3Runnable;
 
-public class F3NameRunnable extends BukkitRunnable {
+public class BukkitF3Runnable extends BukkitRunnable implements F3Runnable{
 
     private List<String> names;
     private int current;
-    private VersionHandler handler;
-    private GroupDS group;
+    private F3NameBukkit plugin;
+    private F3Group group;
     
     private static final Random random = new Random();
 
     private List<Player> players;
 
-    public F3NameRunnable(VersionHandler handler, GroupDS group) {
-        this.handler = handler;
+    public BukkitF3Runnable(F3NameBukkit plugin, F3Group group) {
+        this.plugin = plugin;
         this.players = new ArrayList<>();
         this.group = group;
         
@@ -39,10 +39,12 @@ public class F3NameRunnable extends BukkitRunnable {
         current = -1;
     }
 
+    @Override
     public String getCurrentString() {
         return current < 0 ? names.get(0) : names.get(current);
     }
 
+    @Override
     public List<String> getStrings() {
         return names;
     }
@@ -51,7 +53,8 @@ public class F3NameRunnable extends BukkitRunnable {
         return ImmutableList.copyOf(players); //clone list
     }
     
-    public GroupDS getGroup() {
+    @Override
+    public F3Group getGroup() {
         return group;
     }
 
@@ -73,13 +76,12 @@ public class F3NameRunnable extends BukkitRunnable {
         if (names.size() <= current) {
             current = 0;
         }
-        IPayloadPacket packet = handler.getPacket();
         for (Player player : players) {
             if (!player.isOnline()) {
                 players.remove(player);
                 continue;
             }
-            packet.send(player, names.get(current));
+            plugin.send(player, names.get(current));
         }
     }
 

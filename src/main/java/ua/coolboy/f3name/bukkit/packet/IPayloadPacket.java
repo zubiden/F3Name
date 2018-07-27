@@ -1,4 +1,4 @@
-package ua.coolboy.f3name.packet;
+package ua.coolboy.f3name.bukkit.packet;
 
 import org.bukkit.entity.Player;
 

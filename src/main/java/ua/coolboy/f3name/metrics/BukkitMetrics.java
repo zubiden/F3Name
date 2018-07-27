@@ -1,4 +1,4 @@
-package ua.coolboy.f3name.bstats;
+package ua.coolboy.f3name.metrics;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -33,7 +33,7 @@ import java.util.zip.GZIPOutputStream;
  *
  * Check out https://bStats.org/ to learn more about bStats!
  */
-public class Metrics {
+public class BukkitMetrics {
 
     static {
         // You can use the property to disable the check in your test environment
@@ -43,7 +43,7 @@ public class Metrics {
                     new byte[]{'o', 'r', 'g', '.', 'b', 's', 't', 'a', 't', 's', '.', 'b', 'u', 'k', 'k', 'i', 't'});
             final String examplePackage = new String(new byte[]{'y', 'o', 'u', 'r', '.', 'p', 'a', 'c', 'k', 'a', 'g', 'e'});
             // We want to make sure nobody just copy & pastes the example and use the wrong package names
-            if (Metrics.class.getPackage().getName().equals(defaultPackage) || Metrics.class.getPackage().getName().equals(examplePackage)) {
+            if (BukkitMetrics.class.getPackage().getName().equals(defaultPackage) || BukkitMetrics.class.getPackage().getName().equals(examplePackage)) {
                 throw new IllegalStateException("bStats Metrics class has not been relocated correctly!");
             }
         }
@@ -72,7 +72,7 @@ public class Metrics {
      *
      * @param plugin The plugin which stats should be submitted.
      */
-    public Metrics(JavaPlugin plugin) {
+    public BukkitMetrics(JavaPlugin plugin) {
         if (plugin == null) {
             throw new IllegalArgumentException("Plugin cannot be null!");
         }
@@ -119,7 +119,7 @@ public class Metrics {
                 } catch (NoSuchFieldException ignored) { }
             }
             // Register our service
-            Bukkit.getServicesManager().register(Metrics.class, this, plugin, ServicePriority.Normal);
+            Bukkit.getServicesManager().register(BukkitMetrics.class, this, plugin, ServicePriority.Normal);
             if (!found) {
                 // We are the first!
                 startSubmitting();

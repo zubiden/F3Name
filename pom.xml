@@ -72,4 +72,7 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+    <build>
+        <finalName>F3Name</finalName>
+    </build>
 </project>

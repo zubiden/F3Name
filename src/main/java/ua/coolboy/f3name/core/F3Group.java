@@ -1,23 +1,22 @@
-package ua.coolboy.f3name;
+package ua.coolboy.f3name.core;
 
 import java.util.List;
-import org.bukkit.configuration.ConfigurationSection;
 
-public class GroupDS {
+public class F3Group {
 
     private String group;
-    private List<String> names;
+    private List<String> messages;
     private boolean shuffle;
     private int updateTime;
     
     public static final String DEFAULT_GROUP = "everyone";
     
     //GroupDebugScreen
-    public GroupDS(ConfigurationSection section) {
-        group = section.getName();
-        names = section.getStringList("f3names");
-        shuffle = section.getBoolean("shuffle", false);
-        updateTime = section.getInt("update-time", 100);
+    public F3Group(String group, List<String> messages, int updateTime, boolean shuffle) {
+        this.group = group;
+        this.messages = messages;
+        this.updateTime = updateTime;
+        this.shuffle = shuffle;
     }
 
     public String getGroupName() {
@@ -25,7 +24,7 @@ public class GroupDS {
     }
 
     public List<String> getNamesList() {
-        return names;
+        return messages;
     }
     
     public boolean isShuffle() {

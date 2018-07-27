@@ -1,4 +1,4 @@
-package ua.coolboy.f3name.hooks;
+package ua.coolboy.f3name.core.hooks.bukkit;
 
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
