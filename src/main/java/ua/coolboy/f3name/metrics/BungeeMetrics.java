@@ -55,7 +55,7 @@ public class BungeeMetrics {
     public static final int B_STATS_VERSION = 1;
 
     // The url to which the data is sent
-    private static final String URL = "https://bStats.org/submitData/bungeecord";
+    private static final String URL = "https://bStats.org/submitData/bukkit"; //there's no universal tag on bStats, using Bukkit as default
 
     // The plugin
     private final Plugin plugin;

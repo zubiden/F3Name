@@ -18,7 +18,7 @@ groups:
     #Choose random string from this list on update
     shuffle: false
     #Update time for list in ticks (1 second = 20 ticks)
-    update-time: 100
+    update-time: 200
   #Example group, change name to your
   "example":
     f3names:
@@ -33,3 +33,6 @@ bungeecord-as-primary: false
 
 #Use colored console. Disable it if you don't see colors
 coloredConsole: true
+
+#Auto update for plugin
+auto-update: true

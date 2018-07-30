@@ -15,6 +15,7 @@ public interface F3Name {
     public ConfigParser getConfigParser();
     
     public static final String PREFIX = "§3[F3Name] §r";
+    public static final int RESOURCE_ID = 58997;
     
     public static final String BRAND_CHANNEL = "minecraft:brand";
     public static final String PLUGIN_CHANNEL = "bukkit:f3name";

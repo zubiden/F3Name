@@ -1,10 +1,10 @@
 name: F3Name
 main: ua.coolboy.f3name.bukkit.F3NameBukkit
-version: 2.0
+version: 2.1
 author: Cool_boy
 api-version: 1.13
 softdepend: [PlaceholderAPI, LuckPerms]
 commands:
   f3name:
-    aliases: [fname, debugname, f3n]
+    aliases: [fname, f3namebukkit, debugname, f3n]
     permission: f3name.reload

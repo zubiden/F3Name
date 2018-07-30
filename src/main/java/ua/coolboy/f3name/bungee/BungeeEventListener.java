@@ -2,6 +2,7 @@ package ua.coolboy.f3name.bungee;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
+import net.md_5.bungee.api.event.PluginMessageEvent;
 import net.md_5.bungee.api.event.ServerConnectedEvent;
 import net.md_5.bungee.api.event.ServerSwitchEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -40,6 +41,16 @@ public class BungeeEventListener implements Listener {
         ProxiedPlayer player = e.getPlayer();
         if (plugin.getHookedServers().contains(player.getServer().getInfo().getName())) {
             plugin.getPlayerGroup(player); //ask method to get player group
+        }
+    }
+    
+    //Forward server brand thru bungee
+    @EventHandler
+    public void onPluginMessage(PluginMessageEvent e) {
+        if(e.getTag().equals(F3NameBungee.BRAND_CHANNEL) && e.getReceiver() instanceof ProxiedPlayer) {
+            ProxiedPlayer player = (ProxiedPlayer) e.getReceiver();
+            e.setCancelled(true);
+            player.getServer().sendData(F3NameBungee.BRAND_CHANNEL, e.getData());
         }
     }
 

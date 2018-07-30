@@ -31,6 +31,8 @@ import ua.coolboy.f3name.core.hooks.bukkit.PAPIHook;
 import ua.coolboy.f3name.core.hooks.bukkit.VaultHook;
 import ua.coolboy.f3name.bukkit.packet.IPayloadPacket;
 import ua.coolboy.f3name.bukkit.packet.VersionHandler;
+import ua.coolboy.f3name.core.updater.UpdateCallback;
+import ua.coolboy.f3name.core.updater.comparator.VersionComparator;
 
 public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
 
@@ -110,6 +112,8 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
         Bukkit.getPluginManager().registerEvents(this, this);
         setupMetrics();
         logger.info("Plugin enabled!");
+
+        checkUpdate();
     }
 
     @Override
@@ -247,6 +251,27 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
         }));
     }
 
+    private void checkUpdate() {
+        final SpigetUpdateBukkit updater = new SpigetUpdateBukkit(this, RESOURCE_ID);
+        updater.setVersionComparator(VersionComparator.SEM_VER);
+        updater.checkForUpdate(new UpdateCallback() {
+            @Override
+            public void updateAvailable(String newVersion, String downloadUrl, boolean hasDirectDownload) {
+                if (hasDirectDownload) {
+                    if (parser.isAutoUpdate() && updater.downloadUpdate()) {
+                        logger.info("Downloaded update! It will be applied after restart");
+                    } else {
+                        logger.error("Update download failed, reason is " + updater.getFailReason());
+                    }
+                }
+            }
+
+            @Override
+            public void upToDate() {
+            }
+        });
+    }
+
     private void startRunnables() {
         runnables.clear();
         players.clear();
@@ -279,14 +304,14 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
     }
 
     public void send(Player player, String brand) {
-        if (!hasBungeePlugin()) {
+        /*f (!hasBungeePlugin()) {
             handler.getPacket().send(player, brand);
-        } else {
-            ByteArrayDataOutput out = ByteStreams.newDataOutput();
-            out.writeUTF("message");
-            out.writeUTF(PAPIHook.getPAPIString(player, brand)); //set placeholders
-            player.sendPluginMessage(plugin, PLUGIN_CHANNEL, out.toByteArray());
-        }
+        } else {*/
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("message");
+        out.writeUTF(PAPIHook.getPAPIString(player, brand)); //set placeholders
+        player.sendPluginMessage(plugin, PLUGIN_CHANNEL, out.toByteArray());
+        //}
     }
 
     @Override

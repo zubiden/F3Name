@@ -53,10 +53,7 @@ public class F3MessageListener implements PluginMessageListener {
                 if (pl == null) {
                     return;
                 }
-                
-                out.writeUTF("message");
-                out.writeUTF(PAPIHook.getPAPIString(player, in.readUTF()));
-                pl.sendPluginMessage(plugin, F3NameBukkit.PLUGIN_CHANNEL, out.toByteArray());
+                plugin.send(pl, PAPIHook.getPAPIString(player, in.readUTF()));
                 break;
             case "group":
                 out.writeUTF(plugin.getPlayerGroup(player));

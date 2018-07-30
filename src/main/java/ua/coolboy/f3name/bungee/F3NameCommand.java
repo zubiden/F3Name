@@ -10,7 +10,7 @@ public class F3NameCommand extends Command {
     private F3NameBungee plugin;
 
     public F3NameCommand(F3NameBungee plugin) {
-        super("f3name", "f3name.reload", "fname", "debugname", "f3n");
+        super("f3name", "f3name.reload", "f3namebungee");
         this.plugin = plugin;
     }
 

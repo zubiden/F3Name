@@ -22,6 +22,8 @@ import ua.coolboy.f3name.core.F3Name;
 import ua.coolboy.f3name.core.LoggerUtil;
 import ua.coolboy.f3name.core.PacketSerializer;
 import ua.coolboy.f3name.core.hooks.LuckPermsHook;
+import ua.coolboy.f3name.core.updater.UpdateCallback;
+import ua.coolboy.f3name.core.updater.comparator.VersionComparator;
 
 public class F3NameBungee extends Plugin implements F3Name {
 
@@ -81,6 +83,7 @@ public class F3NameBungee extends Plugin implements F3Name {
         setupMetrics();
 
         logger.info("Plugin enabled!");
+        checkUpdate();
     }
 
     private void startRunnables() {
@@ -230,7 +233,22 @@ public class F3NameBungee extends Plugin implements F3Name {
             return map;
         }));
     }
+    
+    private void checkUpdate() {
+        final SpigetUpdateBungee updater = new SpigetUpdateBungee(this, RESOURCE_ID);
+        updater.setVersionComparator(VersionComparator.SEM_VER);
+        updater.checkForUpdate(new UpdateCallback() {
+            @Override
+            public void updateAvailable(String newVersion, String downloadUrl, boolean hasDirectDownload) {
+                logger.info("Update available: "+newVersion+"! Download link: "+downloadUrl);
+            }
 
+            @Override
+            public void upToDate() {
+            }
+        });
+    }
+    
     @Override
     public LoggerUtil getLoggerUtil() {
         return logger;

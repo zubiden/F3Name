@@ -22,7 +22,7 @@ groups:
       - "&6It sends to all servers on your network"
     shuffle: false
     #Update time in ticks
-    update-time: 100
+    update-time: 200
   #Example group, change name to your
   "example":
     f3names:

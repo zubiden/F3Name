@@ -11,7 +11,7 @@ public class BukkitConfigParser implements ConfigParser {
 
     private FileConfiguration config;
 
-    private boolean coloredConsole, bungeecord;
+    private boolean coloredConsole, bungeecord, autoupdate;
 
     private List<F3Group> groups;
 
@@ -20,6 +20,7 @@ public class BukkitConfigParser implements ConfigParser {
 
         coloredConsole = config.getBoolean("colored-console", true);
         bungeecord = config.getBoolean("bungeecord-as-primary", false);
+        autoupdate = config.getBoolean("auto-update", true);
         
         groups = new ArrayList<>();
         for (String key : config.getConfigurationSection("groups").getKeys(false)) {
@@ -34,6 +35,10 @@ public class BukkitConfigParser implements ConfigParser {
     @Override
     public boolean isColoredConsole() {
         return coloredConsole;
+    }
+    
+    public boolean isAutoUpdate() {
+        return autoupdate;
     }
     
     public boolean isBungeeCord() {

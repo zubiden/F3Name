@@ -42,6 +42,7 @@ public class BungeeConfigParser implements ConfigParser {
         
         coloredConsole = config.getBoolean("colored-console", true);
         onlyapi = config.getBoolean("only-api", false);
+        
         excludedServers = config.getStringList("excluded-servers");
         
         groups = new ArrayList<>();
