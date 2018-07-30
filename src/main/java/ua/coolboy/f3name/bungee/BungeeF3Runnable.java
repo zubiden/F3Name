@@ -4,11 +4,14 @@ import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.connection.Server;
+import net.md_5.bungee.api.plugin.Plugin;
+import net.md_5.bungee.api.scheduler.ScheduledTask;
 import net.md_5.bungee.protocol.ProtocolConstants;
 
 import ua.coolboy.f3name.core.F3Group;
@@ -26,6 +29,7 @@ public class BungeeF3Runnable implements Runnable, F3Runnable {
     private ProxyServer server;
 
     private F3NameBungee plugin;
+    private ScheduledTask task;
 
     public BungeeF3Runnable(F3NameBungee plugin, F3Group group) {
         this.plugin = plugin;
@@ -66,9 +70,9 @@ public class BungeeF3Runnable implements Runnable, F3Runnable {
                     || isExcludedServer(player.getServer())) {
                 continue;
             }
-            
-            if(isHookedServer(player.getServer())) {
-                plugin.getMessenger().getMessage(player.getName(), names.get(current), (String msg, Throwable ex)-> {
+
+            if (isHookedServer(player.getServer())) {
+                plugin.getMessenger().getMessage(player.getName(), names.get(current), (String msg, Throwable ex) -> {
                     plugin.send(player, msg);
                 });
             }
@@ -78,14 +82,14 @@ public class BungeeF3Runnable implements Runnable, F3Runnable {
     }
 
     private boolean isExcludedServer(Server server) {
-        if(server == null) {
+        if (server == null) {
             return true;
         }
         return plugin.getConfigParser().getExcludedServers().contains(server.getInfo().getName());
     }
-    
+
     private boolean isHookedServer(Server server) {
-        if(server == null) {
+        if (server == null) {
             return false;
         }
         return plugin.getHookedServers().contains(server.getInfo().getName());
@@ -116,6 +120,14 @@ public class BungeeF3Runnable implements Runnable, F3Runnable {
     @Override
     public List<String> getStrings() {
         return names;
+    }
+
+    public ScheduledTask runTaskTimer(Plugin plugin, int delay, int period) {
+        return task = plugin.getProxy().getScheduler().schedule(plugin, this, delay / 20, period / 20, TimeUnit.SECONDS);
+    }
+    
+    public ScheduledTask getTask() {
+        return task;
     }
 
 }

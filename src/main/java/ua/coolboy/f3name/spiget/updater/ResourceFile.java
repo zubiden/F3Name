@@ -1,4 +1,4 @@
-package ua.coolboy.f3name.core.updater;
+package ua.coolboy.f3name.spiget.updater;
 
 public class ResourceFile {
 

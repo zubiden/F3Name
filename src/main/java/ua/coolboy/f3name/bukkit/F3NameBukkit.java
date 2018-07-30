@@ -1,5 +1,6 @@
 package ua.coolboy.f3name.bukkit;
 
+import ua.coolboy.f3name.spiget.SpigetUpdateBukkit;
 import ua.coolboy.f3name.metrics.BukkitMetrics;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
@@ -32,8 +33,8 @@ import ua.coolboy.f3name.core.hooks.bukkit.PAPIHook;
 import ua.coolboy.f3name.core.hooks.bukkit.VaultHook;
 import ua.coolboy.f3name.bukkit.packet.IPayloadPacket;
 import ua.coolboy.f3name.bukkit.packet.VersionHandler;
-import ua.coolboy.f3name.core.updater.UpdateCallback;
-import ua.coolboy.f3name.core.updater.comparator.VersionComparator;
+import ua.coolboy.f3name.spiget.updater.UpdateCallback;
+import ua.coolboy.f3name.spiget.updater.comparator.VersionComparator;
 
 public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
 
@@ -122,9 +123,7 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender.hasPermission("f3name.reload") && args.length == 1 && args[0].equals("reload")) {
-            for (BukkitF3Runnable runnable : runnables.values()) {
-                runnable.cancel();
-            }
+            runnables.values().stream().forEach(BukkitF3Runnable::cancel);
 
             reload();
 
@@ -239,7 +238,6 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
         addHookPie("placeholderapi", Bukkit.getPluginManager().getPlugin("PlaceholderAPI"));
         addHookPie("luckperms", Bukkit.getPluginManager().getPlugin("LuckPerms"));
         addHookPie("vault", Bukkit.getPluginManager().getPlugin("Vault"));
-        metrics.addCustomChart(new BukkitMetrics.SimplePie("bungeecord", () -> "no"));
     }
 
     private void addHookPie(String charid, Plugin plugin) {

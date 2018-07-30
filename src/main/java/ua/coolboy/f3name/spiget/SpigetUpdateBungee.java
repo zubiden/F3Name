@@ -26,12 +26,12 @@
  *  either expressed or implied, of anybody else.
  */
 
-package ua.coolboy.f3name.bungee;
+package ua.coolboy.f3name.spiget;
 
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
-import ua.coolboy.f3name.core.updater.SpigetUpdateAbstract;
-import ua.coolboy.f3name.core.updater.comparator.VersionComparator;
+import ua.coolboy.f3name.spiget.updater.SpigetUpdateAbstract;
+import ua.coolboy.f3name.spiget.updater.comparator.VersionComparator;
 
 public class SpigetUpdateBungee extends SpigetUpdateAbstract {
 

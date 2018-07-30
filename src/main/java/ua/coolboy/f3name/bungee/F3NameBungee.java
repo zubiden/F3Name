@@ -1,5 +1,7 @@
 package ua.coolboy.f3name.bungee;
 
+import ua.coolboy.f3name.core.hooks.bungee.BungeePlaceholders;
+import ua.coolboy.f3name.spiget.SpigetUpdateBungee;
 import ua.coolboy.f3name.metrics.BungeeMetrics;
 import com.google.common.collect.ImmutableList;
 import java.io.IOException;
@@ -15,6 +17,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
+import net.md_5.bungee.api.scheduler.ScheduledTask;
 import ua.coolboy.f3name.api.F3NameAPI;
 import ua.coolboy.f3name.bungee.messenger.BungeeMessenger;
 
@@ -23,8 +26,8 @@ import ua.coolboy.f3name.core.F3Name;
 import ua.coolboy.f3name.core.LoggerUtil;
 import ua.coolboy.f3name.core.PacketSerializer;
 import ua.coolboy.f3name.core.hooks.LuckPermsHook;
-import ua.coolboy.f3name.core.updater.UpdateCallback;
-import ua.coolboy.f3name.core.updater.comparator.VersionComparator;
+import ua.coolboy.f3name.spiget.updater.UpdateCallback;
+import ua.coolboy.f3name.spiget.updater.comparator.VersionComparator;
 
 public class F3NameBungee extends Plugin implements F3Name {
 
@@ -175,7 +178,8 @@ public class F3NameBungee extends Plugin implements F3Name {
     }
 
     protected void reload() {
-        getProxy().getScheduler().cancel(this);
+        //trying to suddenly not kill bStats runnable
+        runnables.values().stream().map(BungeeF3Runnable::getTask).forEach(ScheduledTask::cancel);
 
         runnables.clear();
         players.clear();
@@ -221,7 +225,6 @@ public class F3NameBungee extends Plugin implements F3Name {
 
     private void setupMetrics() {
         metrics = new BungeeMetrics(this);
-        metrics.addCustomChart(new BungeeMetrics.SimplePie("bungeecord", () -> "yes"));
         addHookPie("luckperms", getProxy().getPluginManager().getPlugin("LuckPerms"));
     }
     
@@ -229,7 +232,7 @@ public class F3NameBungee extends Plugin implements F3Name {
         metrics.addCustomChart(new BungeeMetrics.AdvancedPie(charid, () -> {
             Map<String, Integer> map = new HashMap<>();
             if (plugin != null) {
-                map.put("BungeeCord|"+plugin.getDescription().getVersion(), 1);
+                map.put(plugin.getDescription().getVersion(), 1);
             } else {
                 map.put("Not using", 1);
             }

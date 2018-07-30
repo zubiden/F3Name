@@ -26,7 +26,7 @@
  *  either expressed or implied, of anybody else.
  */
 
-package ua.coolboy.f3name.bukkit;
+package ua.coolboy.f3name.spiget;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -40,10 +40,10 @@ import java.lang.reflect.Method;
 import java.util.Properties;
 import java.util.logging.Level;
 
-import ua.coolboy.f3name.core.updater.SpigetUpdateAbstract;
-import ua.coolboy.f3name.core.updater.comparator.VersionComparator;
-import ua.coolboy.f3name.core.updater.download.DownloadCallback;
-import ua.coolboy.f3name.core.updater.download.UpdateDownloader;
+import ua.coolboy.f3name.spiget.updater.SpigetUpdateAbstract;
+import ua.coolboy.f3name.spiget.updater.comparator.VersionComparator;
+import ua.coolboy.f3name.spiget.updater.download.DownloadCallback;
+import ua.coolboy.f3name.spiget.updater.download.UpdateDownloader;
 
 public class SpigetUpdateBukkit extends SpigetUpdateAbstract {
 
@@ -99,7 +99,7 @@ public class SpigetUpdateBukkit extends SpigetUpdateAbstract {
 				return false;
 			}
 		}
-		final File updateFile = new File(plugin.getDataFolder().getParentFile(), pluginFile.getName()); //trying to replace current file
+		final File updateFile = new File(Bukkit.getUpdateFolderFile(), pluginFile.getName());
 
 		Properties properties = getUpdaterProperties();
 		boolean allowExternalDownload = properties != null && properties.containsKey("externalDownloads") && Boolean.valueOf(properties.getProperty("externalDownloads"));

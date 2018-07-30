@@ -1,8 +1,9 @@
-package ua.coolboy.f3name.bungee;
+package ua.coolboy.f3name.core.hooks.bungee;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.connection.Server;
 
+//meh... i don't think that this is a hook, but this package is better for it
 public class BungeePlaceholders {
 
     public static String setPlaceholders(ProxiedPlayer player, String string) {

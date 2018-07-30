@@ -26,7 +26,7 @@
  *  either expressed or implied, of anybody else.
  */
 
-package ua.coolboy.f3name.core.updater;
+package ua.coolboy.f3name.spiget.updater;
 
 public class ResourceInfo {
 

@@ -26,24 +26,12 @@
  *  either expressed or implied, of anybody else.
  */
 
-package ua.coolboy.f3name.core.updater;
+package ua.coolboy.f3name.spiget.updater.download;
 
-public interface UpdateCallback {
+public interface DownloadCallback {
 
-	/**
-	 * Called when a new version was found
-	 * <p>
-	 * Use {@link SpigetUpdateAbstract#getLatestResourceInfo()} to get all resource details
-	 *
-	 * @param newVersion      the new version's name
-	 * @param downloadUrl     URL to download the update
-	 * @param canAutoDownload whether this update can be downloaded automatically
-	 */
-	void updateAvailable(String newVersion, String downloadUrl, boolean canAutoDownload);
+	void finished();
 
-	/**
-	 * Called when no update was found
-	 */
-	void upToDate();
+	void error(Exception exception);
 
 }

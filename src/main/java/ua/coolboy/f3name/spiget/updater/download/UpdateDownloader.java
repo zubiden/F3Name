@@ -26,9 +26,9 @@
  *  either expressed or implied, of anybody else.
  */
 
-package ua.coolboy.f3name.core.updater.download;
+package ua.coolboy.f3name.spiget.updater.download;
 
-import ua.coolboy.f3name.core.updater.ResourceInfo;
+import ua.coolboy.f3name.spiget.updater.ResourceInfo;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -43,21 +43,18 @@ public class UpdateDownloader {
 	public static final String RESOURCE_DOWNLOAD = "http://api.spiget.org/v2/resources/%s/download";
 
 	public static Runnable downloadAsync(final ResourceInfo info, final File file, final String userAgent, final DownloadCallback callback) {
-		return new Runnable() {
-			@Override
-			public void run() {
-				try {
-					download(info, file, userAgent);
-					callback.finished();
-				} catch (Exception e) {
-					callback.error(e);
-				}
-			}
-		};
+		return () -> { //lambda
+                    try {
+                        download(info, file, userAgent);
+                        callback.finished();
+                    } catch (Exception e) {
+                        callback.error(e);
+                    }
+                };
 	}
 
 	public static void download(ResourceInfo info, File file) {
-		download(info, file);
+		download(info, file, "SpigetResourceUpdater/F3Name"); //very recursive method
 	}
 
 	public static void download(ResourceInfo info, File file, String userAgent) {

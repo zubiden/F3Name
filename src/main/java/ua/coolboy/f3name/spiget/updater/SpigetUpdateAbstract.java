@@ -26,12 +26,12 @@
  *  either expressed or implied, of anybody else.
  */
 
-package ua.coolboy.f3name.core.updater;
+package ua.coolboy.f3name.spiget.updater;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import ua.coolboy.f3name.core.updater.comparator.VersionComparator;
+import ua.coolboy.f3name.spiget.updater.comparator.VersionComparator;
 
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
