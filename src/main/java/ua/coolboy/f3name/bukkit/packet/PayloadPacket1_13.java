@@ -9,9 +9,9 @@ import org.bukkit.entity.Player;
 import ua.coolboy.f3name.core.hooks.bukkit.PAPIHook;
 
 public class PayloadPacket1_13 implements IPayloadPacket, Cloneable {
-    
+
     private String version;
-    
+
     protected PayloadPacket1_13(String version) {
         this.version = version;
     }
@@ -21,7 +21,7 @@ public class PayloadPacket1_13 implements IPayloadPacket, Cloneable {
         brand = PAPIHook.getPAPIString(player, brand);
         sendRaw(player, brand);
     }
-    
+
     @Override
     public void sendRaw(Player player, String brand) {
         Validate.notNull(player, "Player is null!");
@@ -32,14 +32,14 @@ public class PayloadPacket1_13 implements IPayloadPacket, Cloneable {
                 new PacketDataSerializer(Unpooled.buffer()).a(brand)
         ));
     }
-    
+
     @Override
     public Object getHandle() {
         return new PacketPlayOutCustomPayload(
                 PacketPlayOutCustomPayload.b, //brand channel
                 new PacketDataSerializer(Unpooled.buffer()).a(""));
     }
-    
+
     @Override
     public String getVersion() {
         return version;

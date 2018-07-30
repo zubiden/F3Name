@@ -15,6 +15,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
+import ua.coolboy.f3name.api.F3NameAPI;
 import ua.coolboy.f3name.bungee.messenger.BungeeMessenger;
 
 import ua.coolboy.f3name.core.F3Group;
@@ -57,7 +58,9 @@ public class F3NameBungee extends Plugin implements F3Name {
         logger.setColoredConsole(parser.isColoredConsole());
 
         logger.info("Starting BungeeCord version...");
-
+        
+        new F3NameAPI(this);
+        
         messenger = new BungeeMessenger(this);
 
         new BungeeEventListener(this);

@@ -23,6 +23,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import ua.coolboy.f3name.api.F3NameAPI;
 import ua.coolboy.f3name.core.F3Group;
 import ua.coolboy.f3name.core.F3Name;
 import ua.coolboy.f3name.core.LoggerUtil;
@@ -64,12 +65,14 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
         F3NameBukkit.plugin = this;
         logger = new BukkitLoggerUtil();
         try {
-            this.handler = new VersionHandler(Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3]);
+            this.handler = new VersionHandler(Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3],this);
         } catch (IllegalStateException ex) {
             Bukkit.getLogger().severe("Stopping plugin!");
             Bukkit.getPluginManager().disablePlugin(plugin);
             return;
         }
+        
+        new F3NameAPI(this);
 
         File file = new File(getDataFolder(), "config.yml");
         if (!file.exists()) {
@@ -304,14 +307,7 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
     }
 
     public void send(Player player, String brand) {
-        /*f (!hasBungeePlugin()) {
-            handler.getPacket().send(player, brand);
-        } else {*/
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-        out.writeUTF("message");
-        out.writeUTF(PAPIHook.getPAPIString(player, brand)); //set placeholders
-        player.sendPluginMessage(plugin, PLUGIN_CHANNEL, out.toByteArray());
-        //}
+        handler.getPacket().send(player, brand);
     }
 
     @Override

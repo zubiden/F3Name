@@ -8,11 +8,11 @@ public interface F3Name {
 
     public ServerType getServerType();
 
-    public void send(UUID uuid, String brand);
-
     public F3Name getInstance();
     
     public ConfigParser getConfigParser();
+    
+    public void send(UUID uuid, String brand);
     
     public static final String PREFIX = "§3[F3Name] §r";
     public static final int RESOURCE_ID = 58997;

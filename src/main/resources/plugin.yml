@@ -1,6 +1,6 @@
 name: F3Name
 main: ua.coolboy.f3name.bukkit.F3NameBukkit
-version: 2.1
+version: 2.2
 author: Cool_boy
 api-version: 1.13
 softdepend: [PlaceholderAPI, LuckPerms]

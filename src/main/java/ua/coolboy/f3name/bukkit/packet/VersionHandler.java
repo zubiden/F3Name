@@ -1,18 +1,19 @@
 package ua.coolboy.f3name.bukkit.packet;
 
+import ua.coolboy.f3name.bukkit.F3NameBukkit;
+
 public class VersionHandler {
 
     private IPayloadPacket packet;
     private String version;
 
-    public VersionHandler(String version) {
+    public VersionHandler(String version, F3NameBukkit plugin) {
         switch (version) {
             case "v1_13_R1":
                 packet =  new PayloadPacket1_13(version);
                 break;
             default:
-                //TODO if version > 1.13, try with reflection
-                throw new IllegalStateException("[F3Name] Unsupported version: "+version+"!");
+                packet = new ReflectionPayloadPacket(version, plugin);
         }
 
     }
