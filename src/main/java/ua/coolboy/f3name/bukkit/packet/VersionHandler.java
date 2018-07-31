@@ -1,5 +1,6 @@
 package ua.coolboy.f3name.bukkit.packet;
 
+import org.bukkit.Bukkit;
 import ua.coolboy.f3name.bukkit.F3NameBukkit;
 
 public class VersionHandler {
@@ -7,7 +8,8 @@ public class VersionHandler {
     private IPayloadPacket packet;
     private String version;
 
-    public VersionHandler(String version, F3NameBukkit plugin) {
+    public VersionHandler(F3NameBukkit plugin) {
+        version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
         switch (version) {
             case "v1_13_R1":
                 packet =  new PayloadPacket1_13(version);

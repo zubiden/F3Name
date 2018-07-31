@@ -6,6 +6,7 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,7 @@ import ua.coolboy.f3name.core.hooks.bukkit.PAPIHook;
 import ua.coolboy.f3name.core.hooks.bukkit.VaultHook;
 import ua.coolboy.f3name.bukkit.packet.IPayloadPacket;
 import ua.coolboy.f3name.bukkit.packet.VersionHandler;
+import ua.coolboy.f3name.core.F3Runnable;
 import ua.coolboy.f3name.spiget.updater.UpdateCallback;
 import ua.coolboy.f3name.spiget.updater.comparator.VersionComparator;
 
@@ -66,7 +68,7 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
         F3NameBukkit.plugin = this;
         logger = new BukkitLoggerUtil();
         try {
-            this.handler = new VersionHandler(Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3],this);
+            this.handler = new VersionHandler(this);
         } catch (IllegalStateException ex) {
             Bukkit.getLogger().severe("Stopping plugin!");
             Bukkit.getPluginManager().disablePlugin(plugin);
@@ -166,6 +168,7 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
 
     protected void setBungeePlugin() {
         bungeePlugin = true;
+        
     }
 
     @EventHandler
@@ -173,7 +176,12 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
         removePlayer(e.getPlayer());
     }
 
-    public HashMap<String, BukkitF3Runnable> getRunnables() {
+    @Override
+    public Collection<? extends F3Runnable> getRunnables() {
+        return runnables.values();
+    }
+    
+    public Map<String, BukkitF3Runnable> getRunnablesMap() {
         return runnables;
     }
 
@@ -290,9 +298,8 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
         return logger;
     }
 
-    @Override
-    public F3Name getInstance() {
-        return this;
+    public static F3NameBukkit getInstance() {
+        return plugin;
     }
 
     @Override

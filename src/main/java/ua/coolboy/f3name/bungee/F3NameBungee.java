@@ -23,6 +23,7 @@ import ua.coolboy.f3name.bungee.messenger.BungeeMessenger;
 
 import ua.coolboy.f3name.core.F3Group;
 import ua.coolboy.f3name.core.F3Name;
+import ua.coolboy.f3name.core.F3Runnable;
 import ua.coolboy.f3name.core.LoggerUtil;
 import ua.coolboy.f3name.core.PacketSerializer;
 import ua.coolboy.f3name.core.hooks.LuckPermsHook;
@@ -164,8 +165,12 @@ public class F3NameBungee extends Plugin implements F3Name {
     public boolean isHooked(String string) {
         return HOOKS.contains(string);
     }
-
-    public Map<String, BungeeF3Runnable> getRunnables() {
+    
+    public Collection<? extends F3Runnable> getRunnables() {
+        return runnables.values();
+    }
+    
+    public Map<String, BungeeF3Runnable> getRunnablesMap() {
         return runnables;
     }
 
@@ -290,11 +295,6 @@ public class F3NameBungee extends Plugin implements F3Name {
             throw new IllegalArgumentException("Can't find player with UUID " + uuid);
         }
         send(player, brand);
-    }
-
-    @Override
-    public F3Name getInstance() {
-        return this;
     }
 
 }
