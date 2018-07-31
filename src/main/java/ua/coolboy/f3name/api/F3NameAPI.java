@@ -13,7 +13,7 @@ public class F3NameAPI {
     private static F3Name plugin;
 
     public F3NameAPI(F3Name plugin) {
-        if(plugin != null) throw new IllegalAccessError("Plugin already set!");
+        if(this.plugin != null) throw new IllegalAccessError("Plugin already set!");
         this.plugin = plugin;
     }
     
