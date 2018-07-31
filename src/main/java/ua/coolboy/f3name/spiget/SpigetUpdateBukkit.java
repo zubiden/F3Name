@@ -113,7 +113,7 @@ public class SpigetUpdateBukkit extends SpigetUpdateAbstract {
 		dispatch(UpdateDownloader.downloadAsync(latestResourceInfo, updateFile, getUserAgent(), new DownloadCallback() {
 			@Override
 			public void finished() {
-				log.info("[SpigetUpdate] Update saved as " + updateFile.getPath());
+				//log.info("[SpigetUpdate] Update saved as " + updateFile.getPath()); mute Spiget, we have own message
 			}
 
 			@Override

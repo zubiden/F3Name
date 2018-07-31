@@ -269,8 +269,6 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
                 if (hasDirectDownload) {
                     if (parser.isAutoUpdate() && updater.downloadUpdate()) {
                         logger.info("Downloaded update! It will be applied after restart");
-                    } else {
-                        logger.error("Update download failed, reason is " + updater.getFailReason());
                     }
                 }
             }
