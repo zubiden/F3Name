@@ -8,7 +8,7 @@ import org.bukkit.craftbukkit.v1_13_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import ua.coolboy.f3name.core.hooks.bukkit.PAPIHook;
 
-public class PayloadPacket1_13 implements IPayloadPacket, Cloneable {
+public class PayloadPacket1_13 implements IPayloadPacket {
 
     private String version;
 

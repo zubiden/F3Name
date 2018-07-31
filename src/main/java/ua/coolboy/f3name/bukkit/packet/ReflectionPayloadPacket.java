@@ -48,7 +48,7 @@ public class ReflectionPayloadPacket implements IPayloadPacket {
 
     @Override
     public Object getHandle() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not implemented in ReflectionPayloadPacket!");
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ReflectionPayloadPacket implements IPayloadPacket {
         return version;
     }
 
-    //Less efficient than direct using of NMS
+    //Less efficient than direct usе of NMS
     private void checkPlayerChannels(Player player) {
         try {
             Field playerChannels = player.getClass().getDeclaredField("channels");
