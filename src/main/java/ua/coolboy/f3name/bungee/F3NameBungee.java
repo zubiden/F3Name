@@ -166,6 +166,7 @@ public class F3NameBungee extends Plugin implements F3Name {
         return HOOKS.contains(string);
     }
     
+    @Override
     public Collection<? extends F3Runnable> getRunnables() {
         return runnables.values();
     }

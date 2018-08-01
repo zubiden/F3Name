@@ -284,7 +284,8 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
         players.clear();
         for (F3Group group : parser.getF3GroupList()) {
             BukkitF3Runnable runnable = new BukkitF3Runnable(plugin, group);
-            runnable.runTaskTimer(plugin, 0, group.getUpdateTime());
+            //idk is it safe, let's test
+            runnable.runTaskTimerAsynchronously(plugin, 0, group.getUpdateTime());
             runnables.put(group.getGroupName(), runnable);
         }
 
