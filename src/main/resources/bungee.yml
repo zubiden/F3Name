@@ -1,5 +1,5 @@
 name: F3Name
 main: ua.coolboy.f3name.bungee.F3NameBungee
-version: 2.3
+version: 2.4
 author: Cool_boy
 softdepend: [LuckPerms]
