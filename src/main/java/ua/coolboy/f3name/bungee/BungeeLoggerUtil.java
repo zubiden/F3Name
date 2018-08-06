@@ -1,5 +1,7 @@
 package ua.coolboy.f3name.bungee;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
@@ -36,6 +38,13 @@ public class BungeeLoggerUtil implements LoggerUtil {
     @Override
     public void error(Object obj, Throwable t) {
         console.sendMessage(getMessage(obj + "\n" + t.getMessage(), ChatColor.DARK_RED));
+    }
+    
+    @Override
+    public void printStacktrace(Exception ex) {
+        StringWriter outError = new StringWriter();
+        ex.printStackTrace(new PrintWriter(outError));
+        console.sendMessage(getMessage(outError, ChatColor.GRAY));
     }
     
     @Override

@@ -1,5 +1,7 @@
 package ua.coolboy.f3name.bukkit;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
@@ -33,6 +35,13 @@ public class BukkitLoggerUtil implements LoggerUtil {
     @Override
     public void error(Object obj, Throwable t) {
         console.sendMessage(getMessage(obj + "\n" + t.getMessage(), ChatColor.DARK_RED));
+    }
+    
+    @Override
+    public void printStacktrace(Exception ex) {
+        StringWriter outError = new StringWriter();
+        ex.printStackTrace(new PrintWriter(outError));
+        console.sendMessage(getMessage(outError, ChatColor.GRAY));
     }
 
     private String getMessage(Object obj, ChatColor color) {

@@ -16,7 +16,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -74,7 +73,7 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
             Bukkit.getPluginManager().disablePlugin(plugin);
             return;
         }
-        
+
         new F3NameAPI(this);
 
         File file = new File(getDataFolder(), "config.yml");
@@ -82,8 +81,7 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
             saveDefaultConfig();
         }
 
-        parser = new BukkitConfigParser((YamlConfiguration) getConfig()); //Bukkit provides us a YamlConfiguration, safe
-
+        parser = new BukkitConfigParser(getConfig());
         logger.setColoredConsole(parser.isColoredConsole());
 
         logger.info("Starting Bukkit version...");
@@ -96,26 +94,14 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
         runnables = new HashMap<>();
         players = new HashMap<>();
 
-        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            HOOKS.add("PAPI");
-            papiHook = new PAPIHook(Bukkit.getPluginManager().getPlugin("PlaceholderAPI"));
-            logger.info("Found PlaceholderAPI! Using it for placeholders.");
-        }
-
-        if (Bukkit.getPluginManager().isPluginEnabled("LuckPerms")) {
-            HOOKS.add("LP");
-            lpHook = new LuckPermsHook(parser.getF3GroupList());
-            logger.info("Found LuckPerms! Using it for groups.");
-        } else if (getServer().getPluginManager().isPluginEnabled("Vault")) {
-            HOOKS.add("Vault");
-            vaultHook = new VaultHook(parser.getF3GroupList());
-            logger.info("Found Vault! Using it for groups.");
-        }
+        searchHooks();
 
         if (!parser.isBungeeCord()) {
             startRunnables();
         }
+
         Bukkit.getPluginManager().registerEvents(this, this);
+        
         setupMetrics();
         logger.info("Plugin enabled!");
 
@@ -168,7 +154,7 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
 
     protected void setBungeePlugin() {
         bungeePlugin = true;
-        
+
     }
 
     @EventHandler
@@ -180,7 +166,7 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
     public Collection<? extends F3Runnable> getRunnables() {
         return runnables.values();
     }
-    
+
     public Map<String, BukkitF3Runnable> getRunnablesMap() {
         return runnables;
     }
@@ -207,16 +193,26 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
 
         reloadConfig();
         parser = new BukkitConfigParser(getConfig());
-
+        
+        Bukkit.getMessenger().unregisterIncomingPluginChannel(this);
+        messageListener = new F3MessageListener(plugin);
+        
+        bungeePlugin = false;
         check();
-
-        startRunnables();
-
-        if (isHooked("LP")) {
-            lpHook = new LuckPermsHook(parser.getF3GroupList());
-        } else if (isHooked("Vault")) {
-            vaultHook = new VaultHook(parser.getF3GroupList());
+        
+        searchHooks();
+        //what!? Why i'm didn't stopped any runnables before
+        for (BukkitF3Runnable runnable : runnables.values()) {
+            if (runnable == null) {
+                continue;
+            }
+            runnable.cancel();
         }
+
+        if (!parser.isBungeeCord()) {
+            startRunnables();
+        }
+
     }
 
     public BukkitF3Runnable addPlayer(Player player) {
@@ -290,6 +286,25 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
         }
 
         Bukkit.getOnlinePlayers().forEach(p -> addPlayer(p));
+    }
+
+    private void searchHooks() {
+        HOOKS.clear();
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            HOOKS.add("PAPI");
+            papiHook = new PAPIHook(Bukkit.getPluginManager().getPlugin("PlaceholderAPI"));
+            logger.info("Found PlaceholderAPI! Using it for placeholders.");
+        }
+
+        if (Bukkit.getPluginManager().isPluginEnabled("LuckPerms")) {
+            HOOKS.add("LP");
+            lpHook = new LuckPermsHook(parser.getF3GroupList());
+            logger.info("Found LuckPerms! Using it for groups.");
+        } else if (getServer().getPluginManager().isPluginEnabled("Vault")) {
+            HOOKS.add("Vault");
+            vaultHook = new VaultHook(parser.getF3GroupList());
+            logger.info("Found Vault! Using it for groups.");
+        }
     }
 
     @Override

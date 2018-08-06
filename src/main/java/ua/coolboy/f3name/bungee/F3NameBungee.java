@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -62,9 +63,9 @@ public class F3NameBungee extends Plugin implements F3Name {
         logger.setColoredConsole(parser.isColoredConsole());
 
         logger.info("Starting BungeeCord version...");
-        
+
         new F3NameAPI(this);
-        
+
         messenger = new BungeeMessenger(this);
 
         new BungeeEventListener(this);
@@ -83,6 +84,7 @@ public class F3NameBungee extends Plugin implements F3Name {
 
         runnables = new HashMap<>();
         players = new HashMap<>();
+
         if (!parser.isOnlyAPI()) {
             startRunnables();
         }
@@ -136,6 +138,8 @@ public class F3NameBungee extends Plugin implements F3Name {
     }
 
     public BungeeF3Runnable addPlayer(ProxiedPlayer player, String group) {
+        if(runnables == null || runnables.isEmpty()) return null;
+        
         BungeeF3Runnable current = players.get(player);
         if (current != null) {
             current.removePlayer(player);
@@ -165,12 +169,12 @@ public class F3NameBungee extends Plugin implements F3Name {
     public boolean isHooked(String string) {
         return HOOKS.contains(string);
     }
-    
+
     @Override
     public Collection<? extends F3Runnable> getRunnables() {
         return runnables.values();
     }
-    
+
     public Map<String, BungeeF3Runnable> getRunnablesMap() {
         return runnables;
     }
@@ -185,11 +189,16 @@ public class F3NameBungee extends Plugin implements F3Name {
 
     protected void reload() {
         //trying to suddenly not kill bStats runnable
-        runnables.values().stream().map(BungeeF3Runnable::getTask).forEach(ScheduledTask::cancel);
+        runnables.values().stream()
+                .filter(Objects::nonNull) //idk how it can be null, but better be prepared
+                .map(BungeeF3Runnable::getTask)
+                .filter(Objects::nonNull) //fix for NullPointer
+                .forEach(ScheduledTask::cancel);
 
         runnables.clear();
         players.clear();
         hookedServers.clear();
+
         checkServers();
 
         try {
@@ -198,8 +207,9 @@ public class F3NameBungee extends Plugin implements F3Name {
             logger.error("Failed to load config file!", ex);
             return;
         }
-
-        startRunnables();
+        if (!parser.isOnlyAPI()) {
+            startRunnables();
+        }
 
         if (isHooked("LP")) {
             lpHook = new LuckPermsHook(parser.getF3GroupList());
@@ -233,7 +243,7 @@ public class F3NameBungee extends Plugin implements F3Name {
         metrics = new BungeeMetrics(this);
         addHookPie("luckperms", getProxy().getPluginManager().getPlugin("LuckPerms"));
     }
-    
+
     private void addHookPie(String charid, Plugin plugin) {
         metrics.addCustomChart(new BungeeMetrics.AdvancedPie(charid, () -> {
             Map<String, Integer> map = new HashMap<>();
@@ -245,14 +255,14 @@ public class F3NameBungee extends Plugin implements F3Name {
             return map;
         }));
     }
-    
+
     private void checkUpdate() {
         final SpigetUpdateBungee updater = new SpigetUpdateBungee(this, RESOURCE_ID);
         updater.setVersionComparator(VersionComparator.SEM_VER);
         updater.checkForUpdate(new UpdateCallback() {
             @Override
             public void updateAvailable(String newVersion, String downloadUrl, boolean hasDirectDownload) {
-                logger.info("Update available: "+newVersion+"! Download link: "+downloadUrl);
+                logger.info("Update available: " + newVersion + "! Download link: " + downloadUrl);
             }
 
             @Override
@@ -260,7 +270,7 @@ public class F3NameBungee extends Plugin implements F3Name {
             }
         });
     }
-    
+
     @Override
     public LoggerUtil getLoggerUtil() {
         return logger;

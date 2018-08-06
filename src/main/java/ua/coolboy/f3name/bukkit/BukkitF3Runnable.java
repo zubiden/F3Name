@@ -10,13 +10,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 import ua.coolboy.f3name.core.F3Group;
 import ua.coolboy.f3name.core.F3Runnable;
 
-public class BukkitF3Runnable extends BukkitRunnable implements F3Runnable{
+public class BukkitF3Runnable extends BukkitRunnable implements F3Runnable {
 
     private List<String> names;
     private int current;
     private F3NameBukkit plugin;
     private F3Group group;
-    
+
     private static final Random random = new Random();
 
     private List<Player> players;
@@ -25,11 +25,11 @@ public class BukkitF3Runnable extends BukkitRunnable implements F3Runnable{
         this.plugin = plugin;
         this.players = new ArrayList<>();
         this.group = group;
-        
+
         if (group.getNamesList() == null || group.getNamesList().isEmpty()) {
             throw new IllegalArgumentException("List must contain at least one string!");
         }
-        
+
         this.names = new ArrayList<>();
 
         for (String string : group.getNamesList()) {
@@ -52,7 +52,7 @@ public class BukkitF3Runnable extends BukkitRunnable implements F3Runnable{
     public List<Player> getPlayers() {
         return ImmutableList.copyOf(players); //clone list
     }
-    
+
     @Override
     public F3Group getGroup() {
         return group;

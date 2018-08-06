@@ -48,6 +48,7 @@ public class BungeeEventListener implements Listener {
     @EventHandler
     public void onPluginMessage(PluginMessageEvent e) {
         if(e.getTag().equals(F3NameBungee.BRAND_CHANNEL) && e.getReceiver() instanceof ProxiedPlayer) {
+            if(e.isCancelled()) return;
             ProxiedPlayer player = (ProxiedPlayer) e.getReceiver();
             e.setCancelled(true);
             player.sendData(F3NameBungee.BRAND_CHANNEL, e.getData());

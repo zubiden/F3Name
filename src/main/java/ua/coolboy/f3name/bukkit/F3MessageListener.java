@@ -3,23 +3,17 @@ package ua.coolboy.f3name.bukkit;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import java.util.ArrayList;
-import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
-import ua.coolboy.f3name.core.F3Group;
 import ua.coolboy.f3name.core.hooks.bukkit.PAPIHook;
 
 public class F3MessageListener implements PluginMessageListener {
 
     private F3NameBukkit plugin;
 
-    private List<F3Group> bungeeGroups;
-
     public F3MessageListener(F3NameBukkit plugin) {
         this.plugin = plugin;
-        bungeeGroups = new ArrayList<>();
 
         Bukkit.getMessenger().registerOutgoingPluginChannel(plugin, F3NameBukkit.PLUGIN_CHANNEL);
         Bukkit.getMessenger().registerIncomingPluginChannel(plugin, F3NameBukkit.PLUGIN_CHANNEL, this);

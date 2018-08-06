@@ -130,8 +130,8 @@ public class BungeeMessenger implements Listener {
                     Callback<String> s = groupCallback.get(player.getName());
                     if (s != null) {
                         s.done(group, null);
-                        groupCallback.remove(player.getName());
                     }
+                    groupCallback.remove(player.getName());
                     break;
                 case "message":
                     String text = in.readUTF();
@@ -139,10 +139,10 @@ public class BungeeMessenger implements Listener {
 
                     if (msg != null) {
                         msg.done(text, null);
-                        messageCallback.remove(player.getName());
                     } else {
                         plugin.sendLocally(player, text);
                     }
+                    messageCallback.remove(player.getName());
                     break;
             }
         }
