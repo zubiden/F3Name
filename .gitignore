@@ -27,3 +27,5 @@ nbdist/
 build.xml
 manifest.mf
 *.jar
+
+dependency-reduced-pom.xml

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>f3name</artifactId>
+    <name>F3Name</name>
+    
+    <parent>
+        <groupId>ua.coolboy</groupId>
+        <artifactId>f3name-parent</artifactId>
+        <version>${f3name.plugin.version}</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>ua.coolboy</groupId>
+            <artifactId>f3name-core</artifactId>
+            <version>${f3name.plugin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ua.coolboy</groupId>
+            <artifactId>f3name-bukkit</artifactId>
+            <version>${f3name.plugin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ua.coolboy</groupId>
+            <artifactId>f3name-bungee</artifactId>
+            <version>${f3name.plugin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ua.coolboy</groupId>
+            <artifactId>f3name-1.13</artifactId>
+            <version>${f3name.plugin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ua.coolboy</groupId>
+            <artifactId>f3name-1.13.1</artifactId>
+            <version>${f3name.plugin.version}</version>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <finalName>f3name</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.2</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
