@@ -1,6 +1,25 @@
 # F3Name
-### Edit server name in debug screen​
-With release of Minecraft 1.13, server owners get additional place to show information to player. And this place is... debug screen!
-With this plugin you can easily edit server name from Spigot to whatever you want. Show your server name, ping, or just advertise player (best place for it).
+## Edit server brand in debug screen
 
-Full description and download link on [SpigotMC](https://www.spigotmc.org/resources/f3name-rename-your-server-in-debug-screen.58997/)
+# [`SpigotMC page`](https://www.spigotmc.org/resources/f3name-edit-your-server-brand-in-debug-screen.58997/)
+
+### Info
+
+With release of Minecraft 1.13, server owners get an additional place to show information to players. And this place is... debug screen!
+With this plugin you can easily edit server brand from default ("Spigot", or very long Bungee version) to whatever you want.
+
+### Features
+* Edit server brand in debug screen (F3)
+* Colors and animation
+* Easy configuration
+* Both BungeeCord and Spigot
+* Supports PlaceholderAPI
+* Vault (basic) or LuckPerms (advanced) group support
+* Built-in placeholders for BungeeCord
+
+### Screenshots
+![Colorful](https://www.spigotmc.org/attachments/ezgif-4-1206f344dd-gif.357306/)
+![Local world time](https://www.spigotmc.org/attachments/ezgif-4-dda45a2c9f-gif.357307/)
+
+## Compiling
+Clone or download this repository and import it like `Maven project` into your IDE. Then build `F3Name-parent` project, and plugin jar will appear in `F3Name/target` folder.
