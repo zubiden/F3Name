@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>f3name-1.13</artifactId>
-    <name>F3Name-1.13</name>
+    <artifactId>f3name-packet-abstraction</artifactId>
+    <name>F3Name-Packet-Abstraction</name>
 
     <parent>
         <groupId>ua.coolboy</groupId>
@@ -22,7 +22,7 @@
         </dependency>
         <dependency>
             <groupId>ua.coolboy</groupId>
-            <artifactId>f3name-packet-abstraction</artifactId>
+            <artifactId>f3name-core</artifactId>
             <version>${f3name.plugin.version}</version>
             <scope>compile</scope>
         </dependency>

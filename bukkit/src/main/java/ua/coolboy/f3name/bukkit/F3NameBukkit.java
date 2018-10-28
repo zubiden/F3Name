@@ -30,8 +30,8 @@ import ua.coolboy.f3name.core.F3Group;
 import ua.coolboy.f3name.core.F3Name;
 import ua.coolboy.f3name.core.LoggerUtil;
 import ua.coolboy.f3name.core.hooks.LuckPermsHook;
-import ua.coolboy.f3name.core.hooks.bukkit.PAPIHook;
-import ua.coolboy.f3name.core.hooks.bukkit.VaultHook;
+import ua.coolboy.f3name.bukkit.hooks.PAPIHook;
+import ua.coolboy.f3name.bukkit.hooks.VaultHook;
 import ua.coolboy.f3name.bukkit.packet.IPayloadPacket;
 import ua.coolboy.f3name.bukkit.packet.VersionHandler;
 import ua.coolboy.f3name.core.F3Runnable;
@@ -127,7 +127,7 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
             field.set(this, false);
         } catch (Exception ex) {
             logger.error("Failed to notify BungeeCord!", ex);
-        } 
+        }
 
     }
 
@@ -349,6 +349,10 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
     }
 
     public void send(Player player, String brand) {
+        sendRaw(player, PAPIHook.getPAPIString(player, brand));
+    }
+
+    public void sendRaw(Player player, String brand) {
         if (player == null || !player.isOnline()) {
             return; //silently fall
         }
@@ -358,12 +362,12 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
     @Override
     public void send(UUID uuid, String brand) {
         Player player = Bukkit.getPlayer(uuid);
-        send(player, PAPIHook.getPAPIString(player, brand));
+        send(player, brand);
     }
 
     @Override
     public void sendRaw(UUID uuid, String brand) {
-        send(Bukkit.getPlayer(uuid), brand);
+        sendRaw(Bukkit.getPlayer(uuid), brand);
     }
 
     @Override

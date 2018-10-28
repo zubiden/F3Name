@@ -6,7 +6,6 @@ import com.google.common.io.ByteStreams;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
-import ua.coolboy.f3name.core.hooks.bukkit.PAPIHook;
 
 public class F3MessageListener implements PluginMessageListener {
 
@@ -47,7 +46,7 @@ public class F3MessageListener implements PluginMessageListener {
                 if (pl == null) {
                     return;
                 }
-                plugin.send(pl, PAPIHook.getPAPIString(player, in.readUTF()));
+                plugin.send(pl, in.readUTF());
                 break;
             case "group":
                 out.writeUTF(plugin.getPlayerGroup(player));

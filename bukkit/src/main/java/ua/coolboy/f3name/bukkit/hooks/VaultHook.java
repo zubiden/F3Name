@@ -1,4 +1,4 @@
-package ua.coolboy.f3name.core.hooks.bukkit;
+package ua.coolboy.f3name.bukkit.hooks;
 
 import java.util.List;
 import java.util.stream.Collectors;

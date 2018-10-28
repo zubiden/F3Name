@@ -22,7 +22,7 @@
         </dependency>
         <dependency>
             <groupId>ua.coolboy</groupId>
-            <artifactId>f3name-core</artifactId>
+            <artifactId>f3name-packet-abstraction</artifactId>
             <version>${f3name.plugin.version}</version>
             <scope>compile</scope>
         </dependency>

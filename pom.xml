@@ -20,6 +20,7 @@
         <module>core</module>
         <module>bukkit</module>
         <module>bungee</module>
+        <module>packet-abstraction</module>
         <module>1_13_R1</module>
         <module>1_13_R2</module>
         <module>f3name</module>

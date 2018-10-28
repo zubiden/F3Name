@@ -42,7 +42,7 @@
     </dependencies>
     
     <build>
-        <finalName>f3name</finalName>
+        <finalName>F3Name</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>

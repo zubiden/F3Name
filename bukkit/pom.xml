@@ -44,6 +44,12 @@
         </dependency>
         <dependency>
             <groupId>ua.coolboy</groupId>
+            <artifactId>f3name-packet-abstraction</artifactId>
+            <version>${f3name.plugin.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>ua.coolboy</groupId>
             <artifactId>f3name-1.13</artifactId>
             <version>${f3name.plugin.version}</version>
             <scope>compile</scope>
