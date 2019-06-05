@@ -1,0 +1,5 @@
+name: F3Name
+main: ua.coolboy.f3name.bungee.F3NameBungee
+version: ${f3name.version}
+author: Cool_boy
+softdepend: [LuckPerms]
