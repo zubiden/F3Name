@@ -10,7 +10,6 @@ groups:
   #Default group. DO NOT REMOVE!
   everyone:
     f3names:
-      #Max 256 characters per line
       - "&6This is an example configuration file"
       - "&6Use this list to set multiple names in debug screen"
       - "&6It also have support of PlaceholderAPI,&r %player_displayname%"

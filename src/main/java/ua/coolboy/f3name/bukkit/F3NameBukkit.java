@@ -32,8 +32,8 @@ import ua.coolboy.f3name.core.LoggerUtil;
 import ua.coolboy.f3name.core.hooks.LuckPermsHook;
 import ua.coolboy.f3name.bukkit.hooks.PAPIHook;
 import ua.coolboy.f3name.bukkit.hooks.VaultHook;
+import ua.coolboy.f3name.bukkit.packet.ReflectionPayloadPacket;
 import ua.coolboy.f3name.core.F3Runnable;
-import ua.coolboy.f3name.core.PacketSerializer;
 import ua.coolboy.f3name.spiget.updater.UpdateCallback;
 import ua.coolboy.f3name.spiget.updater.comparator.VersionComparator;
 
@@ -45,9 +45,9 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
     private HashMap<Player, BukkitF3Runnable> players;
 
     private String serverVersion = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
-    
+
     private static BukkitConfigParser parser;
-    
+
     private BukkitMetrics metrics;
 
     private LuckPermsHook lpHook;
@@ -77,21 +77,20 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
         parser = new BukkitConfigParser(getConfig());
         logger.setColoredConsole(parser.isColoredConsole());
 
-        logger.info("Starting Bukkit version...");
+        logger.info("Starting Bukkit(" + serverVersion + ") version...");
 
         messageListener = new F3MessageListener(plugin);
 
         bungeePlugin = false;
         check();
-        
-        
-        if(!serverVersion.equals("v1_13_R1")) {
+
+        if (!serverVersion.equals("v1_13_R1")) {
             try {
-            this.getServer().getMessenger().registerOutgoingPluginChannel(this, BRAND_CHANNEL);
-            } catch(Exception ex) {
+                this.getServer().getMessenger().registerOutgoingPluginChannel(this, BRAND_CHANNEL);
+            } catch (Exception ex) {
                 logger.error("Couldn't initialize messaging channel! Plugin is not working on versions lower than 1.13!");
             }
-        } 
+        }
 
         runnables = new HashMap<>();
         players = new HashMap<>();
@@ -127,7 +126,8 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
 
             field.set(this, false);
         } catch (Exception ex) {
-            logger.error("Failed to notify BungeeCord!", ex);
+            //Seems broken, let's just silent it :D
+            //logger.error("Failed to notify BungeeCord!", ex);
         }
 
     }
@@ -350,13 +350,14 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
     }
 
     public void sendRaw(Player player, String brand) {
-        if (player == null || !player.isOnline()) {
+        if (player == null) {
             return;
         }
-        if(serverVersion.equals("v1_13_R1")) {
+        if (serverVersion.equals("v1_13_R1")) {
             new ua.coolboy.f3name.bukkit.packet.PayloadPacket1_13_R1().send(player, brand);
         } else {
-            player.sendPluginMessage(plugin, BRAND_CHANNEL, new PacketSerializer(brand).toArray());
+            //player.sendPluginMessage(plugin, BRAND_CHANNEL, new PacketSerializer(brand).toArray());
+            new ReflectionPayloadPacket(plugin).send(player, brand);
         }
     }
 

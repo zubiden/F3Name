@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ua.coolboy</groupId>
     <artifactId>f3name</artifactId>
-    <version>3.1.0</version>
+    <version>3.1.1</version>
     <name>F3Name</name>
     <url>https://www.spigotmc.org/resources/f3name-rename-your-server-in-debug-screen.58997/</url>
     <packaging>jar</packaging>

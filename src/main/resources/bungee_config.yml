@@ -14,7 +14,6 @@ groups:
   #Default group. DO NOT REMOVE!
   everyone:
     f3names:
-      #Max 256 characters per line
       - "&6This is a BungeeCord version of &3F3Name"
       - "&6Everything the same as in the Bukkit version"
       - "&6Except excluded-servers list above and built-in placeholders"

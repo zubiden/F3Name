@@ -2,9 +2,10 @@ package ua.coolboy.f3name.bukkit;
 
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -77,15 +78,15 @@ public class BukkitF3Runnable extends BukkitRunnable implements F3Runnable {
         if (names.size() <= current) {
             current = 0;
         }
-        Iterator<Player> iter = players.iterator();
-        while(iter.hasNext()) {
-            Player player = iter.next();
+        Set<Player> toRemove = new HashSet<>();
+        for(Player player : players) {
             if (!player.isOnline()) {
-                iter.remove(); //Fixed ConcurentModificationException
+                toRemove.add(player);
                 continue;
             }
             plugin.send(player, names.get(current));
         }
+        players.removeAll(toRemove);
     }
 
 }
