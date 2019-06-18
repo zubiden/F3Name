@@ -2,10 +2,9 @@ package ua.coolboy.f3name.bukkit;
 
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -25,7 +24,8 @@ public class BukkitF3Runnable extends BukkitRunnable implements F3Runnable {
 
     public BukkitF3Runnable(F3NameBukkit plugin, F3Group group) {
         this.plugin = plugin;
-        this.players = new ArrayList<>();
+        //I don't trust this line
+        this.players = new CopyOnWriteArrayList<>();
         this.group = group;
 
         if (group.getNamesList() == null || group.getNamesList().isEmpty()) {
@@ -78,15 +78,13 @@ public class BukkitF3Runnable extends BukkitRunnable implements F3Runnable {
         if (names.size() <= current) {
             current = 0;
         }
-        Set<Player> toRemove = new HashSet<>();
         for(Player player : players) {
             if (!player.isOnline()) {
-                toRemove.add(player);
                 continue;
             }
             plugin.send(player, names.get(current));
         }
-        players.removeAll(toRemove);
+        players.removeIf((Player t) -> !t.isOnline());
     }
 
 }
