@@ -29,13 +29,14 @@ import ua.coolboy.f3name.api.F3NameAPI;
 import ua.coolboy.f3name.core.F3Group;
 import ua.coolboy.f3name.core.F3Name;
 import ua.coolboy.f3name.core.LoggerUtil;
-import ua.coolboy.f3name.core.hooks.LuckPermsHook;
 import ua.coolboy.f3name.bukkit.hooks.PAPIHook;
 import ua.coolboy.f3name.bukkit.hooks.VaultHook;
 import ua.coolboy.f3name.bukkit.packet.ReflectionPayloadPacket;
 import ua.coolboy.f3name.core.F3Runnable;
 import ua.coolboy.f3name.spiget.updater.UpdateCallback;
 import ua.coolboy.f3name.spiget.updater.comparator.VersionComparator;
+import ua.coolboy.f3name.core.hooks.ILuckPermsHook;
+import ua.coolboy.f3name.core.hooks.LuckPermsHook;
 
 public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
 
@@ -50,7 +51,7 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
 
     private BukkitMetrics metrics;
 
-    private LuckPermsHook lpHook;
+    private ILuckPermsHook lpHook;
     private VaultHook vaultHook;
     private PAPIHook papiHook;
 
@@ -84,14 +85,17 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
         bungeePlugin = false;
         check();
 
-        if (!serverVersion.equals("v1_13_R1")) {
-            try {
+        //TODO rewrite to use direct plugin messages on 1.13.2+
+        /*if (serverVersion.equals("v1_13_R1")) {
+           logger.error("Update to 1.13.2!");
+           Bukkit.getPluginManager().disablePlugin(this);
+           return;
+        }*/
+ /*try {
                 this.getServer().getMessenger().registerOutgoingPluginChannel(this, BRAND_CHANNEL);
             } catch (Exception ex) {
                 logger.error("Couldn't initialize messaging channel! Plugin is not working on versions lower than 1.13!");
-            }
-        }
-
+            }*/
         runnables = new HashMap<>();
         players = new HashMap<>();
 
@@ -225,7 +229,7 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
         check();
 
         searchHooks();
-        //what!? Why i'm didn't stopped any runnables before
+        //stopping in case if we are missing something
         for (BukkitF3Runnable runnable : runnables.values()) {
             if (runnable == null) {
                 continue;
@@ -322,8 +326,13 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
 
         if (Bukkit.getPluginManager().isPluginEnabled("LuckPerms")) {
             HOOKS.add("LP");
-            lpHook = new LuckPermsHook(parser.getF3GroupList());
-            logger.info("Found LuckPerms! Using it for groups.");
+            lpHook = LuckPermsHook.get(parser.getF3GroupList());
+            if (lpHook != null) {
+                logger.info("Found LuckPerms! Using it for groups.");
+            } else {
+                logger.error("Problem with obtaining LuckPerms instance!");
+                HOOKS.remove("LP");
+            }
         } else if (getServer().getPluginManager().isPluginEnabled("Vault")) {
             HOOKS.add("Vault");
             vaultHook = new VaultHook(parser.getF3GroupList());
@@ -353,12 +362,8 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
         if (player == null) {
             return;
         }
-        if (serverVersion.equals("v1_13_R1")) {
-            new ua.coolboy.f3name.bukkit.packet.PayloadPacket1_13_R1().send(player, brand);
-        } else {
-            //player.sendPluginMessage(plugin, BRAND_CHANNEL, new PacketSerializer(brand).toArray());
-            new ReflectionPayloadPacket(plugin).send(player, brand);
-        }
+        //player.sendPluginMessage(plugin, BRAND_CHANNEL, new PacketSerializer(brand).toArray());
+        new ReflectionPayloadPacket(plugin).send(player, brand);
     }
 
     @Override

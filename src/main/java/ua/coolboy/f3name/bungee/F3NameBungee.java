@@ -27,9 +27,10 @@ import ua.coolboy.f3name.core.F3Name;
 import ua.coolboy.f3name.core.F3Runnable;
 import ua.coolboy.f3name.core.LoggerUtil;
 import ua.coolboy.f3name.core.PacketSerializer;
-import ua.coolboy.f3name.core.hooks.LuckPermsHook;
 import ua.coolboy.f3name.spiget.updater.UpdateCallback;
 import ua.coolboy.f3name.spiget.updater.comparator.VersionComparator;
+import ua.coolboy.f3name.core.hooks.ILuckPermsHook;
+import ua.coolboy.f3name.core.hooks.LuckPermsHook;
 
 public class F3NameBungee extends Plugin implements F3Name {
 
@@ -40,7 +41,7 @@ public class F3NameBungee extends Plugin implements F3Name {
 
     private BungeeMetrics metrics;
 
-    private LuckPermsHook lpHook;
+    private ILuckPermsHook lpHook;
 
     private static final List<String> HOOKS = new ArrayList<>();
 
@@ -76,7 +77,7 @@ public class F3NameBungee extends Plugin implements F3Name {
 
         if (getProxy().getPluginManager().getPlugin("LuckPerms") != null) {
             HOOKS.add("LP");
-            lpHook = new LuckPermsHook(parser.getF3GroupList());
+            lpHook = LuckPermsHook.get(parser.getF3GroupList());
             logger.info("Found LuckPerms! Using it for groups.");
         }
 
@@ -218,7 +219,7 @@ public class F3NameBungee extends Plugin implements F3Name {
         }
 
         if (isHooked("LP")) {
-            lpHook = new LuckPermsHook(parser.getF3GroupList());
+            lpHook = LuckPermsHook.get(parser.getF3GroupList());
         }
     }
 

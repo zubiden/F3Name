@@ -27,7 +27,7 @@ public class BungeeEventListener implements Listener {
         if (!plugin.getConfigParser().getExcludedServers().contains(e.getServer().getInfo().getName())) {
             BungeeF3Runnable runnable = plugin.addPlayer(player);
             if (runnable != null) {
-                plugin.send(player.getUniqueId(), runnable.getCurrentString());
+                plugin.send(player, runnable.getCurrentString(), true);
             }
         }
     }
