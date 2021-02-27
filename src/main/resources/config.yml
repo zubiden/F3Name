@@ -30,8 +30,11 @@ groups:
 #messages through this plugin. It allows bungee to use hooked plugins (PlaceholderAPI, Vault, LuckPerms)
 bungeecord-as-primary: false
 
-#Use colored console. Disable this if your console doesn't have support for colors
+#Use colored console. Disable this if your console doesn't support colors
 coloredConsole: true
 
-#Auto update for the plugin
+#Makes request to spiget.org, to check if new version available
+check-for-updates: true
+
+#Auto update for the plugin. Ignored if check-for-updates is set to false
 auto-update: true

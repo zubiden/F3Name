@@ -110,7 +110,9 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
         setupMetrics();
         logger.info("Plugin enabled!");
 
-        checkUpdate();
+        if(parser.checkForUpdates()) {
+            checkUpdate();
+        }
     }
 
     @Override
@@ -145,7 +147,7 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
 
             sender.sendMessage(PREFIX + ChatColor.GOLD + "Reloaded configuration!");
         } else {
-            sender.sendMessage(PREFIX + ChatColor.GOLD + "v" + getDescription().getVersion() + " by Cool_boy (aka prettydude)");
+            sender.sendMessage(PREFIX + ChatColor.GOLD + "v" + getDescription().getVersion());
         }
         return true;
     }
@@ -266,7 +268,7 @@ public class F3NameBukkit extends JavaPlugin implements Listener, F3Name {
     }
 
     private void setupMetrics() {
-        metrics = new BukkitMetrics(plugin);
+        metrics = new BukkitMetrics(plugin, 2920);
         addHookPie("placeholderapi", Bukkit.getPluginManager().getPlugin("PlaceholderAPI"));
         addHookPie("luckperms", Bukkit.getPluginManager().getPlugin("LuckPerms"));
         addHookPie("vault", Bukkit.getPluginManager().getPlugin("Vault"));

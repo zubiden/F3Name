@@ -93,7 +93,10 @@ public class F3NameBungee extends Plugin implements F3Name {
         setupMetrics();
 
         logger.info("Plugin enabled!");
-        checkUpdate();
+        
+        if(parser.checkForUpdates()) {
+            checkUpdate();
+        }
     }
 
     private void startRunnables() {
@@ -247,7 +250,7 @@ public class F3NameBungee extends Plugin implements F3Name {
     }
 
     private void setupMetrics() {
-        metrics = new BungeeMetrics(this);
+        metrics = new BungeeMetrics(this, 3004);
         addHookPie("luckperms", getProxy().getPluginManager().getPlugin("LuckPerms"));
     }
 

@@ -35,8 +35,10 @@ public class BukkitF3Runnable extends BukkitRunnable implements F3Runnable {
         this.names = new ArrayList<>();
 
         for (String string : group.getNamesList()) {
-            this.names.add(ChatColor.translateAlternateColorCodes('&', string) + ChatColor.RESET);
+            this.names.add(ChatColor.translateAlternateColorCodes('&',string) + ChatColor.RESET);
         }
+        
+        plugin.getLoggerUtil().info(this.names);
 
         current = -1;
     }

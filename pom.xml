@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ua.coolboy</groupId>
     <artifactId>f3name</artifactId>
-    <version>3.2.0</version>
+    <version>3.3.0</version>
     <name>F3Name</name>
     <url>https://www.spigotmc.org/resources/f3name-rename-your-server-in-debug-screen.58997/</url>
     <packaging>jar</packaging>
@@ -21,41 +21,31 @@
         </repository>
         <repository>
             <id>placeholderapi</id>
-            <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
         <repository>
             <id>vault</id>
             <url>http://nexus.hc.to/content/repositories/pub_releases/</url>
-        </repository>
-        <repository>
-            <id>bungeecord-repo</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
     </repositories>
     
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.15-R0.1-SNAPSHOT</version>
+            <artifactId>spigot-api</artifactId>
+            <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
-            <version>2.10.4</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>me.lucko.luckperms</groupId>
-            <artifactId>luckperms-api</artifactId>
-            <version>4.4</version>
+            <version>2.10.9</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.luckperms</groupId>
             <artifactId>api</artifactId>
-            <version>5.0</version>
+            <version>5.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -67,10 +57,11 @@
         <dependency>
             <groupId>net.md-5</groupId>
             <artifactId>bungeecord-api</artifactId>
-            <version>1.15-SNAPSHOT</version>
-            <type>jar</type>
+            <version>1.16-R0.4</version>
             <scope>provided</scope>
         </dependency>
+
+
     </dependencies>
     <build>
         <finalName>F3Name</finalName>

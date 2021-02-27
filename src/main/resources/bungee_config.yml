@@ -35,5 +35,8 @@ groups:
 #on network, but don't want to change server brand on other servers in the network
 only-api: false
 
-#Use colored console. Disable this if your console doesn't have support for colors
+#Use colored console. Disable this if your console doesn't support colors
 coloredConsole: true
+
+#Makes request to spiget.org, to check if new version available
+check-for-updates: true

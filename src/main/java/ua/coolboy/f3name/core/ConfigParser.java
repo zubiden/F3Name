@@ -5,6 +5,8 @@ import java.util.List;
 public interface ConfigParser {
 
     public boolean isColoredConsole();
+    
+    public boolean checkForUpdates();
 
     public F3Group getF3Group(String name);
 

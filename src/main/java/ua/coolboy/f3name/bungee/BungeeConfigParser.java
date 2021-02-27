@@ -24,8 +24,7 @@ public class BungeeConfigParser implements ConfigParser {
     
     private List<String> excludedServers;
     
-    private boolean coloredConsole;
-    private boolean onlyapi;
+    private boolean coloredConsole, onlyapi, checkForUpdates;
     
     public BungeeConfigParser(Plugin plugin) throws IOException {
         if (!plugin.getDataFolder().exists()) {
@@ -42,6 +41,7 @@ public class BungeeConfigParser implements ConfigParser {
         
         coloredConsole = config.getBoolean("colored-console", true);
         onlyapi = config.getBoolean("only-api", false);
+        checkForUpdates = config.getBoolean("check-for-updates", true);
         
         excludedServers = config.getStringList("excluded-servers");
         
@@ -61,6 +61,11 @@ public class BungeeConfigParser implements ConfigParser {
     
     public boolean isOnlyAPI() {
         return onlyapi;
+    }
+    
+    @Override
+    public boolean checkForUpdates() {
+        return checkForUpdates;
     }
     
     public void excludeServer(String name) {
